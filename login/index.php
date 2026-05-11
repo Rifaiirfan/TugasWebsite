@@ -8,7 +8,7 @@ $air = new klas_air;
 $koneksi = $air->koneksi();
 $dt_user = $air->dt_user($_SESSION['user']);
 $level = $dt_user[2];
-?>
+?> 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -765,6 +765,7 @@ $level = $dt_user[2];
                                 <div class="mb-3 ">
                                     <label for="meter_awal" class="form-label">Meter Awal (m<sup>3</sup>) :</label>
                                     <input type="text" class="form-control" id="meter_awal" placeholder="Enter Meter Awal " name="meter_awal" value="<?php echo $meter_awal ?? ''; ?>" required>
+                                    <div id="info_meter_awal" class="form-text mt-1"></div>
                                 </div>
                                 <div class="mb-3 ">
                                     <label for="meter_akhir" class="form-label">Meter Akhir (m<sup>3</sup>) :</label>

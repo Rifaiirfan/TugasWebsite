@@ -3,7 +3,7 @@ class klas_air
 {
     function koneksi()
     {
-        $koneksi = mysqli_connect("localhost", "user_air", "#Us3r_A1r_2026#", "airdb");
+        $koneksi = mysqli_connect("localhost", "root","", "airdb");
         return $koneksi;
     }
     function dt_user($sesi_user)

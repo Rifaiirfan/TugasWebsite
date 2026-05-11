@@ -132,6 +132,47 @@ $(document).ready(function () {
     if (e[1] == "catat_meter") {
       $("#meter_add").hide();
       $("#meter_list").show();
+
+      // Auto-fill meter_awal dari meter_akhir terakhir saat warga dipilih
+      $("#meter_form select[name='username']").on("change", function () {
+        var username = $(this).val();
+        if (username) {
+          $.ajax({
+            type: "post",
+            url: "../assets/ajax.php",
+            data: { p: "meter_awal", username: username },
+            dataType: "json",
+          })
+            .done(function (d) {
+              if (d.meter_akhir !== "") {
+                $("#meter_awal").val(d.meter_akhir);
+                var badgeClass =
+                  d.status === "LUNAS" ? "bg-success" : "bg-danger";
+                var statusLabel =
+                  d.status === "LUNAS" ? "LUNAS" : "BELUM LUNAS";
+                $("#info_meter_awal").html(
+                  "Diisi otomatis dari meter akhir sebelumnya. Status pembayaran terakhir: " +
+                    "<span class='badge " +
+                    badgeClass +
+                    "'>" +
+                    statusLabel +
+                    "</span>",
+                );
+              } else {
+                $("#meter_awal").val("");
+                $("#info_meter_awal").html(
+                  "<span class='text-muted'>Belum ada data meter sebelumnya untuk warga ini.</span>",
+                );
+              }
+            })
+            .fail(function () {
+              console.log("Gagal mengambil data meter terakhir");
+            });
+        } else {
+          $("#meter_awal").val("");
+          $("#info_meter_awal").html("");
+        }
+      });
     } else {
       console.log("13131313");
       $("#summary,#chart,#meter_list").hide();

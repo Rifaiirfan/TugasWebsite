@@ -41,5 +41,14 @@ if (isset($_POST['p'])) {
             $response['bln'] = $dw['tgl'] ?? '-';
         }
         echo json_encode($response);
+    } elseif ($p == "meter_awal") {
+        $username = mysqli_real_escape_string($koneksi, $_POST['username']);
+        $q = mysqli_query($koneksi, "SELECT meter_akhir, status FROM pemakaian WHERE username='$username' ORDER BY no DESC LIMIT 1");
+        $d = mysqli_fetch_assoc($q);
+        if ($d) {
+            echo json_encode(['meter_akhir' => $d['meter_akhir'], 'status' => $d['status']]);
+        } else {
+            echo json_encode(['meter_akhir' => '', 'status' => '']);
+        }
     }
 }
